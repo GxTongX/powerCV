@@ -1,0 +1,10 @@
+.book .book-list {
+  margin: 10px 10px;
+}
+.book .book-list-item {
+  display: inline-block;
+  cursor: pointer;
+}
+.book .book-list-item-img {
+  width: 100px;
+}

@@ -1,24 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
+import {HashRouter, Route, Switch} from "react-router-dom";
+import Login from './containers/login'
+import routes from './routes'
+import TopNav from './component/topNav' 
 import './App.css';
+import 'antd/dist/antd.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/login" component={Login}/>
+          <Route path="/" render={() => (
+            <div>
+                <TopNav/>
+                  {
+                    routes.map((route, index) => {
+                      const routeProps = { ...route };
+                      const Component = routeProps.component;
+                      routeProps.render = (props) => (
+                        <Component {...props} />
+                      )
+                      delete routeProps.Component
+                      return (
+                        <Route key={index} { ...routeProps }/>
+                      )
+                    })
+                  }
+                  {/* <Route key={index} path={route.path} component={route.component}/> */}
+            </div>
+          )}/>
+        </Switch>
+      </HashRouter>
     </div>
   );
 }
